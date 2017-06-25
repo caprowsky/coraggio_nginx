@@ -5,7 +5,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: coraggio_nginx
+    container_name: coraggio_proxy
     restart: always
     external_links:
       - coraggio_nginx
