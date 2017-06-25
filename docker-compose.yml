@@ -1,0 +1,30 @@
+version: "2"
+
+services:
+  main-nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: coraggio_nginx
+    restart: always
+    external_links:
+      - coraggio_nginx
+      - coraggio_ghost
+      - coraggio_varnish
+    networks:
+      - default
+      - coraggio_default
+    volumes:
+      - ./sites-enabled:/etc/nginx/sites-enabled
+      - ./auth:/etc/nginx/auth
+      - ./html:/var/www/html
+      - ./redirect:/etc/nginx/redirect
+      - ./ssl-proof:/var/www/ssl-proof
+      - /etc/letsencrypt:/etc/letsencrypt
+    ports:
+     - "80:80"
+     - "443:443"
+
+networks:
+  coraggio_default:
+    external: true  
